@@ -7,7 +7,8 @@ public class Camera : MonoBehaviour
     public Transform playerPosition;
     Vector3 position;
     float previosY;
-    float speedCamer = 3f;
+    public float speedCamerToPlayer;
+    public float speedCamerToUp;
 
     // Start is called before the first frame update
     void Start()
@@ -31,8 +32,8 @@ public class Camera : MonoBehaviour
         if (position.y < previosY)
             position.y = previosY;
 
-        position.y += 0.004f;
+        position.y += speedCamerToUp;
         previosY = position.y;
-        transform.position = Vector3.Lerp(transform.position, position, speedCamer * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, position, speedCamerToPlayer * Time.deltaTime);
     }
 }
