@@ -15,7 +15,7 @@ public class Camera : MonoBehaviour
     { 
         position.x = 0f;
         position.y = 0f;
-        position.z = -10f;
+        position.z = -9f;
         transform.position = position;
 
         previosY = 0f;
@@ -26,7 +26,7 @@ public class Camera : MonoBehaviour
     {
         position = playerPosition.position;
         position.x = 0f;
-        position.z = -10f;
+        position.z = -9f;
         if(position.y < 0) 
             position.y = 0f;
         if (position.y < previosY)

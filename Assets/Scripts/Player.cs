@@ -54,6 +54,6 @@ public class Player : MonoBehaviour
     {
         rb.velocity = UnityEngine.Vector2.zero;
         rb.AddForce(transform.up * jumpHeight, ForceMode2D.Impulse);
-        animator.SetInteger("State", 1);
+        // без этого смотриться лучше animator.SetInteger("State", 1);
     }
 }
