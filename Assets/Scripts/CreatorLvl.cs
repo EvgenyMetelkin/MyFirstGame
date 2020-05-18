@@ -9,7 +9,7 @@ public class CreatorLvl : MonoBehaviour
     void Start()
     {
         //m_MainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
-        transform.
+        //transform.
     }
 
     // Update is called once per frame

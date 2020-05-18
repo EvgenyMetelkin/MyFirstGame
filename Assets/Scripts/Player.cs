@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     }
      
     void Jump()
-    {
+    { 
         rb.velocity = UnityEngine.Vector2.zero;
         rb.AddForce(transform.up * jumpHeight, ForceMode2D.Impulse);
         // без этого смотриться лучше animator.SetInteger("State", 1);
