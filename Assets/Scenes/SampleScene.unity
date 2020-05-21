@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 980480909}
   - component: {fileID: 980480912}
   m_Layer: 0
-  m_Name: CameraMain
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -771,7 +771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPosition: {fileID: 2062531779}
   speedCamerToPlayer: 4
-  speedCamerToUp: 0.04
+  speedCamerToUp: 0.01
 --- !u!1001 &1054889970
 PrefabInstance:
   m_ObjectHideFlags: 0
