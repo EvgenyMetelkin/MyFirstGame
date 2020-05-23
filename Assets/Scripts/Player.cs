@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -9,18 +10,22 @@ public class Player : MonoBehaviour
     public float speed;
     public float jumpHeight;
     Animator animator;
+    Transform cameraTransform;
+    public int magicCameraHeight;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        cameraTransform = GameObject.Find("Camera").GetComponent<Camera>().transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Flip(); 
+        Flip();
+        CheckDead();
     }
 
     void FixedUpdate()
@@ -55,5 +60,17 @@ public class Player : MonoBehaviour
         rb.velocity = UnityEngine.Vector2.zero;
         rb.AddForce(transform.up * jumpHeight, ForceMode2D.Impulse);
         // без этого смотриться лучше animator.SetInteger("State", 1);
+    }
+
+    void CheckDead()
+    {
+        if (cameraTransform.position.y - transform.position.y > magicCameraHeight)
+        {
+            RestartGame();
+        }
+    }
+    void RestartGame()
+    {
+        SceneManager.LoadScene("SampleScene");
     }
 }

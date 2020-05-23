@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    Camera m_MainCamera;
+    Transform cameraTransform;
     public int magicCameraHeight; 
     void Start()
     {
-        m_MainCamera = GameObject.Find("Camera").GetComponent<Camera>();
+        cameraTransform = GameObject.Find("Camera").GetComponent<Camera>().transform;
     }
      
     void Update()
@@ -18,9 +18,10 @@ public class Wall : MonoBehaviour
 
     void UpdateWallPosition()
     {
-        if (m_MainCamera.transform.position.y - transform.position.y > magicCameraHeight)
+        if (cameraTransform.position.y - transform.position.y > magicCameraHeight)
         {
-            Instantiate(gameObject, new Vector2(transform.position.x, m_MainCamera.transform.position.y), transform.rotation);
+            // ! можно переделать просто на смену позиции)
+            Instantiate(gameObject, new Vector2(transform.position.x, cameraTransform.position.y), transform.rotation);
             Destroy(gameObject);
         }
     }

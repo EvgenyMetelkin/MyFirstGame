@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    Camera m_MainCamera;
+    Transform cameraTransform;
     public int magicCameraHeight;
     public int complexityGame;
     void Start()
     {
-        m_MainCamera = GameObject.Find("Camera").GetComponent<Camera>(); 
+        cameraTransform = GameObject.Find("Camera").GetComponent<Camera>().transform; 
     }
      
     void Update()
@@ -19,15 +19,15 @@ public class Platform : MonoBehaviour
 
     void UpdatePlatformPosition()
     { 
-        if (m_MainCamera.transform.position.y - transform.position.y > magicCameraHeight)
+        if (cameraTransform.position.y - transform.position.y > magicCameraHeight)
         {
-
+            // ! можно переделать просто на смену позиции)
             float xRan = Random.Range(-6, 6);
             float yRan = Random.Range(-2, -1);
             float complexityRan = Random.Range(0, 100);
 
             if(complexityGame < complexityRan)
-                Instantiate(gameObject, new Vector2(m_MainCamera.transform.position.x + xRan, m_MainCamera.transform.position.y + magicCameraHeight + yRan), transform.rotation); 
+                Instantiate(gameObject, new Vector2(cameraTransform.position.x + xRan, cameraTransform.position.y + magicCameraHeight + yRan), transform.rotation); 
             Destroy(gameObject);
 
         }
