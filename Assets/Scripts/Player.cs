@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
     public float speed;
+    float horizontalSpeed;
     public float jumpHeight;
     Animator animator;
     Transform cameraTransform;
@@ -44,7 +45,15 @@ public class Player : MonoBehaviour
     }
     void Move()
     {
-        rb.velocity = new UnityEngine.Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            horizontalSpeed = Input.acceleration.x;
+        } 
+        else
+        {
+            horizontalSpeed = Input.GetAxis("Horizontal");
+        }
+        rb.velocity = new UnityEngine.Vector2(horizontalSpeed * speed, rb.velocity.y);
     }
 
     void Flip()
