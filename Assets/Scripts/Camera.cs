@@ -8,9 +8,9 @@ public class Camera : MonoBehaviour
     Vector3 position;
     float previosY;
     public float speedCamerToPlayer;
-    public float speedCamerToUp;
-
-    // Start is called before the first frame update
+    public float maxSpeedCamerToUp;
+    float curSpeedCamerToUp;
+     
     void Start()
     { 
         position.x = 0f;
@@ -19,11 +19,14 @@ public class Camera : MonoBehaviour
         transform.position = position;
 
         previosY = 0f;
+        curSpeedCamerToUp = 0f;
     }
-
-    // Update is called once per frame
+     
     void Update()
     {
+        if (curSpeedCamerToUp < maxSpeedCamerToUp)
+            curSpeedCamerToUp += maxSpeedCamerToUp / 100f;
+
         position = playerPosition.position;
         position.x = 0f;
         position.z = -9f;
@@ -32,7 +35,7 @@ public class Camera : MonoBehaviour
         if (position.y < previosY)
             position.y = previosY;
 
-        position.y += speedCamerToUp;
+        position.y += curSpeedCamerToUp;
         previosY = position.y;
         transform.position = Vector3.Lerp(transform.position, position, speedCamerToPlayer * Time.deltaTime);
     }
