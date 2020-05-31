@@ -10,7 +10,9 @@ public class Camera : MonoBehaviour
     public float speedCamerToPlayer;
     public float maxSpeedCamerToUp;
     float curSpeedCamerToUp;
-     
+    bool isFoalFieldOfView;
+    float t;
+
     void Start()
     { 
         position.x = 0f;
@@ -20,10 +22,35 @@ public class Camera : MonoBehaviour
 
         previosY = 0f;
         curSpeedCamerToUp = 0f;
+
+        isFoalFieldOfView = true;
+        t = 0f;
     }
      
     void Update()
-    {
+    { 
+        float duration = 1.0f; // скорость приближения/отдоления
+        if(isFoalFieldOfView) 
+        {  
+            UnityEngine.Camera.main.fieldOfView = Mathf.Lerp(114.0f, 100.0f, t / duration);
+            t += Time.deltaTime;
+            if (t >= duration)
+            {
+                isFoalFieldOfView = false;
+                t = 0f;
+            }
+        } 
+        else
+        { 
+            UnityEngine.Camera.main.fieldOfView = Mathf.Lerp(100.0f, 114.0f, t / duration);
+            t += Time.deltaTime;
+            if (t >= duration)
+            {
+                isFoalFieldOfView = true;
+                t = 0f;
+            }
+        }
+
         if (curSpeedCamerToUp < maxSpeedCamerToUp)
             curSpeedCamerToUp += maxSpeedCamerToUp / 100f;
 
