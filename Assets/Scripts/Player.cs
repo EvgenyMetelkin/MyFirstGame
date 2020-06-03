@@ -58,10 +58,20 @@ public class Player : MonoBehaviour
 
     void Flip()
     {
-        if (Input.GetAxis("Horizontal") > 0)
-            transform.localRotation = UnityEngine.Quaternion.Euler(0, 0, 0);
-        else if (Input.GetAxis("Horizontal") < 0)
-            transform.localRotation = UnityEngine.Quaternion.Euler(0, 180, 0);
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.acceleration.x > 0)
+                transform.localRotation = UnityEngine.Quaternion.Euler(0, 0, 0);
+            else if (Input.acceleration.x < 0)
+                transform.localRotation = UnityEngine.Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            if (Input.GetAxis("Horizontal") > 0)
+                transform.localRotation = UnityEngine.Quaternion.Euler(0, 0, 0);
+            else if (Input.GetAxis("Horizontal") < 0)
+                transform.localRotation = UnityEngine.Quaternion.Euler(0, 180, 0);
+        }
     }
      
     void Jump()
