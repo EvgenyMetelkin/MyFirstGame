@@ -11,7 +11,8 @@ public class Camera : MonoBehaviour
     public float maxSpeedCamerToUp;
     float curSpeedCamerToUp;
     bool isFoalFieldOfView;
-    float t;
+    float deltaTimeScale;
+    float deltaTimeSpeedCamera;
 
     void Start()
     { 
@@ -24,40 +25,51 @@ public class Camera : MonoBehaviour
         curSpeedCamerToUp = 0f;
 
         isFoalFieldOfView = true;
-        t = 0f;
+        deltaTimeScale = 0f;
+        deltaTimeSpeedCamera = 0f;
     }
      
     void Update()
-    { 
-        float duration = 1.0f; // скорость приближения/отдоления
-        if(isFoalFieldOfView) 
-        {  
-            UnityEngine.Camera.main.fieldOfView = Mathf.Lerp(114.0f, 100.0f, t / duration);
-            t += Time.deltaTime;
-            if (t >= duration)
+    {
+        deltaTimeScale += Time.deltaTime;
+        deltaTimeSpeedCamera += Time.deltaTime;
+
+        //ChangeScale();
+        MoveCamera();
+    }
+
+    void ChangeScale()
+    {
+        float duration = 1.0f; // времянной промяжуток (1с) увеличения приближения/отдоления
+        if (isFoalFieldOfView)
+        {
+            UnityEngine.Camera.main.fieldOfView = Mathf.Lerp(114.0f, 100.0f, deltaTimeScale / duration);
+            if (deltaTimeScale >= duration)
             {
                 isFoalFieldOfView = false;
-                t = 0f;
-            }
-        } 
-        else
-        { 
-            UnityEngine.Camera.main.fieldOfView = Mathf.Lerp(100.0f, 114.0f, t / duration);
-            t += Time.deltaTime;
-            if (t >= duration)
-            {
-                isFoalFieldOfView = true;
-                t = 0f;
+                deltaTimeScale = 0f;
             }
         }
+        else
+        {
+            UnityEngine.Camera.main.fieldOfView = Mathf.Lerp(100.0f, 114.0f, deltaTimeScale / duration); 
+            if (deltaTimeScale >= duration)
+            {
+                isFoalFieldOfView = true;
+                deltaTimeScale = 0f;
+            }
+        }
+    }
 
-        if (curSpeedCamerToUp < maxSpeedCamerToUp)
-            curSpeedCamerToUp += maxSpeedCamerToUp / 100f;
+    void MoveCamera()
+    {
+        float duration = 10.0f; // времянной промяжуток (100с) увеличения скорости камеры вверх
+        curSpeedCamerToUp = Mathf.Lerp(0, maxSpeedCamerToUp, deltaTimeSpeedCamera / duration); 
 
         position = playerPosition.position;
         position.x = 0f;
         position.z = -9f;
-        if(position.y < 0) 
+        if (position.y < 0)
             position.y = 0f;
         if (position.y < previosY)
             position.y = previosY;
