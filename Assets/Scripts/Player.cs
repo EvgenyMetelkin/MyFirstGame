@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -41,6 +42,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Platform")
         {
             Jump();
+        }
+        if (collision.gameObject.tag == "Thorn")
+        {
+            KillPlayer();
         }
     }
     void Move()
@@ -91,5 +96,25 @@ public class Player : MonoBehaviour
     void RestartGame()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+
+    void KillPlayer()
+    {
+        Jump();
+        GetComponent<BoxCollider2D>().enabled = false;
+        StartCoroutine(SetDamageColor());
+    }
+
+    IEnumerator SetDamageColor()
+    {
+        float countSeconds = 0.02f;
+
+        GetComponent<SpriteRenderer>().color = new Color(1f, GetComponent<SpriteRenderer>().color.g - countSeconds, GetComponent<SpriteRenderer>().color.b - countSeconds);
+
+        if (GetComponent<SpriteRenderer>().color.g < 0.2f)
+            StopCoroutine(SetDamageColor());
+
+        yield return new WaitForSeconds(countSeconds);
+        StartCoroutine(SetDamageColor());
     }
 }
